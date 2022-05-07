@@ -16,7 +16,9 @@ const EquipmentsHome: NextPage<Props> = (props) => {
         {props.equipments.map((e) => (
           <li key={e.バーコード}>
             <Link passHref href={`/equipments/${e.バーコード}`}>
-              <a>{e.バーコード}</a>
+              <a className="relative block p-8 border border-gray-100 shadow-md rounded-xl w-80">
+                {e.バーコード}
+              </a>
             </Link>
           </li>
         ))}
