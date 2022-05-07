@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 // import { fetchEquipments } from "../../requests/fetchEquipments";
 
 import type { NextPage, GetStaticProps } from "next";
@@ -7,6 +8,7 @@ interface Props {
   // equipments: Equipment[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const EventsHome: NextPage<Props> = (props) => {
   return (
     <div>

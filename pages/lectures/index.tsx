@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-interface */
 // import { fetchEquipments } from "../../requests/fetchEquipments";
 
 import type { NextPage, GetStaticProps } from "next";
