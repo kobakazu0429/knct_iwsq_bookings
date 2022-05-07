@@ -1,16 +1,17 @@
+import Image from "next/image";
 import { fetchEquipments } from "../../requests/fetchEquipments";
 
 import type { ParsedUrlQuery } from "node:querystring";
 import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
-import type { Equipment } from "../api/fetchEquipments";
+import type { Equipment } from "../../requests/fetchEquipments";
+import { fetchScrapboxPage } from "../../requests/fetchScrapboxPage";
 
 interface Props {
   equipment: Equipment;
+  image: string;
 }
 
 const EquipmentPage: NextPage<Props> = (props) => {
-  console.log(props);
-
   return (
     <div>
       <ul>
@@ -21,6 +22,7 @@ const EquipmentPage: NextPage<Props> = (props) => {
           </li>
         ))}
       </ul>
+      <Image src={props.image} alt="" width={400} height={400} />
     </div>
   );
 };
@@ -28,7 +30,7 @@ const EquipmentPage: NextPage<Props> = (props) => {
 export default EquipmentPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { equipments } = await fetchEquipments();
+  const equipments = await fetchEquipments();
 
   const paths = equipments.map((equipment) => ({
     params: { equipment: equipment.バーコード },
@@ -47,11 +49,16 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   context
 ) => {
   const { equipment } = context.params!;
-  const { equipments } = await fetchEquipments();
+  const equipments = await fetchEquipments();
   const equipmentDetail = equipments.find((e) => e.バーコード === equipment);
+  const { image } = await fetchScrapboxPage(
+    equipmentDetail!.Scrapbox.slice("https://scrapbox.io/iwsq/".length)
+  );
+  if (!image) console.warn(equipment);
 
   const props: Props = {
     equipment: equipmentDetail!,
+    image,
   };
 
   // 本来はここで getBook(id) のように API を呼び出してデータを取得する

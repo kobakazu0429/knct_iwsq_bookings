@@ -3,7 +3,7 @@ import Link from "next/link";
 import { fetchEquipments } from "../../requests/fetchEquipments";
 
 import type { NextPage, GetStaticProps } from "next";
-import type { Equipment } from "../api/fetchEquipments";
+import type { Equipment } from "../../requests/fetchEquipments";
 
 interface Props {
   equipments: Equipment[];
@@ -30,7 +30,7 @@ const EquipmentsHome: NextPage<Props> = (props) => {
 export default EquipmentsHome;
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const { equipments } = await fetchEquipments();
+  const equipments = await fetchEquipments();
 
   const props: Props = {
     equipments: equipments,
